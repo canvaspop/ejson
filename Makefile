@@ -89,4 +89,3 @@ dev_bootstrap:
 	go get ./...
 	go get github.com/mitchellh/gox
 	gox -osarch="linux/amd64" -osarch="darwin/amd64"
-	bundle install
