@@ -17,16 +17,16 @@ func encryptAction(args []string) error {
 		if err != nil {
 			return err
 		}
-		fmt.Printf("Wrote %d bytes to %s.\n", n, filePath)
+		fmt.Fprint(os.Stderr, "Wrote %d bytes to %s.\n", n, filePath)
 	}
 	return nil
 }
 
-func decryptAction(args []string, keydir, outFile string) error {
+func decryptAction(args []string, keydir, userSuppliedPrivateKey, outFile string) error {
 	if len(args) != 1 {
 		return fmt.Errorf("exactly one file path must be given")
 	}
-	decrypted, err := ejson.DecryptFile(args[0], keydir)
+	decrypted, err := ejson.DecryptFile(args[0], keydir, userSuppliedPrivateKey)
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func keygenAction(args []string, keydir string, wFlag bool) error {
 		}
 		fmt.Println(pub)
 	} else {
-		fmt.Printf("Public Key:\n%s\nPrivate Key:\n%s\n", pub, priv)
+		fmt.Fprintf(os.Stderr, "Public Key:\n%s\nPrivate Key:\n%s\n", pub, priv)
 	}
 	return nil
 }
